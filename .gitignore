@@ -1,0 +1,23 @@
+# Beroenden – återskapas med npm install
+node_modules/
+
+# Byggresultat – återskapas med npm run build
+dist/
+dist-ssr/
+
+# Hemligheter – får ALDRIG pushas
+.env
+.env.local
+.env.*.local
+*.local
+
+# Loggar
+*.log
+npm-debug.log*
+
+# Editor och operativsystem
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
