@@ -1,16 +1,7 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import styles from './Header.module.css'
-
-const links = [
-    { to: '/', label: 'Hem' },
-    { to: '/katter', label: 'Våra Katter' },
-    { to: '/kattungar', label: 'Kattungar' },
-    { to: '/utstallning', label: 'Utställning' },
-    { to: '/halsa', label: 'Hälsa' },
-    { to: '/om-oss', label: 'Om oss' },
-    { to: '/kontakt', label: 'Kontakt' },
-]
+import { mainLinks } from '../../data/navigation'
 
 export default function Header() {
     const [open, setOpen] = useState(false)
@@ -41,7 +32,7 @@ export default function Header() {
           id="huvudmeny"
           className={open ? `${styles.navList} ${styles.open}` : styles.navList}
         >
-          {links.map((link) => (
+          {mainLinks.map((link) => (
             <li key={link.to}>
               <NavLink
                 to={link.to}
