@@ -13,9 +13,21 @@
 
 .glossary {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  grid-template-columns: 1fr;
   gap: 1rem;
   margin: 0;
+}
+
+@media (min-width: 36rem) {
+    .glossary {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+    }
+}
+
+@media (min-width: 60rem) {
+    .glossary{
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
 }
 
 .term {
