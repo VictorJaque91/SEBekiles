@@ -1,23 +1,33 @@
-# Beroenden – återskapas med npm install
+# Dependencies
 node_modules/
 
-# Byggresultat – återskapas med npm run build
+# Build output
 dist/
 dist-ssr/
 
-# Hemligheter – får ALDRIG pushas
+# Secrets
 .env
 .env.local
 .env.*.local
 *.local
 
-# Loggar
+# Logs
+logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Editor och operativsystem
+# Editor and operating system
 .vscode/*
 !.vscode/extensions.json
 .idea/
 .DS_Store
 Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

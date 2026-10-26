@@ -1,0 +1,55 @@
+:root {
+  --ink: #2a2a2a;
+  --muted: #5e5e5e;
+  --accent: #3b6f92;
+  --accent-light: #77a9ca;
+  --line: #e6e6e6;
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Josefin Sans', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--ink);
+  background: #fff;
+}
+
+a {
+  color: var(--accent);
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+#root {
+  min-height: 100vh;
+  min height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

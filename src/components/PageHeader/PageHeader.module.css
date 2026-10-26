@@ -1,0 +1,20 @@
+.pageHeader {
+  max-width: 40rem;
+  margin: 4rem auto 0;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-weight: 700;
+  color: #222;
+}
+
+.intro {
+  margin: 1rem 0 0;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #4a4a4a;
+}
