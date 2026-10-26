@@ -4,6 +4,8 @@ import { litters } from '../data/litters.js'
 import PageHeader from '../components/PageHeader/PageHeader.jsx'
 import LitterStatus from '../components/LitterStatus/LitterStatus.jsx'
 import styles from './Kittens.module.css'
+import Accordion from '../components/Accordion/Accordion.jsx'
+import { faq } from '../data/faq.js'
 
 const processSteps = [
   { title: 'Intresseanmälan', text: 'Berätta om dig och ditt hem i formuläret längre ner.' },
@@ -92,6 +94,10 @@ export default function Kittens() {
         </ul>
         <p className={styles.price}>Pris: [PRIS] kr</p>
       </section>
+      <section className={styles.section} aria-labelledby="faq-heading">
+  <h2 id="faq-heading" className={styles.sectionTitle}>Vanliga frågor</h2>
+  <Accordion items={faq} />
+</section>
     </>
   )
 }

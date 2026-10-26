@@ -1,0 +1,59 @@
+.accordion {
+  border-top: 1px solid var(--line);
+}
+
+.item {
+  border-bottom: 1px solid var(--line);
+}
+
+.heading {
+  margin: 0;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  min-height: 3.5rem;
+  padding: 1rem 0;
+  border: none;
+  background: none;
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  text-align: left;
+  color: #222;
+  cursor: pointer;
+}
+
+.trigger:hover {
+  color: var(--accent);
+}
+
+.icon {
+  flex: none;
+  transition: transform 0.2s ease;
+}
+
+.trigger[aria-expanded='true'] .icon {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon {
+    transition: none;
+  }
+}
+
+.panel {
+  max-width: 44rem;
+  padding: 0 0 1.25rem;
+}
+
+.panel p {
+  margin: 0;
+  line-height: 1.8;
+  color: #4a4a4a;
+}
