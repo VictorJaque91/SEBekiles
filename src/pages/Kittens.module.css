@@ -126,3 +126,19 @@
   font-size: 0.875rem;
   color: var(--muted);
 }
+
+.split {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 3rem;
+}
+
+.included {
+  flex: 1 1 18rem;
+}
+
+.formColumn {
+  flex: 2 1 28rem;
+  min-width: 0;
+}

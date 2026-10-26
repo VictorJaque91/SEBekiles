@@ -6,6 +6,7 @@ import LitterStatus from '../components/LitterStatus/LitterStatus.jsx'
 import styles from './Kittens.module.css'
 import Accordion from '../components/Accordion/Accordion.jsx'
 import { faq } from '../data/faq.js'
+import InterestForm from '../components/InterestForm/InterestForm.jsx'
 
 const processSteps = [
   { title: 'Intresseanmälan', text: 'Berätta om dig och ditt hem i formuläret längre ner.' },
@@ -85,15 +86,21 @@ export default function Kittens() {
         </ol>
       </section>
 
-      <section className={styles.section} aria-labelledby="included-heading">
-        <h2 id="included-heading" className={styles.sectionTitle}>Det här ingår</h2>
-        <ul className={styles.includedList}>
-          {included.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-        <p className={styles.price}>Pris: [PRIS] kr</p>
-      </section>
+      <div className={`${styles.section} ${styles.split}`}>
+  <section aria-labelledby="included-heading" className={styles.included}>
+    <h2 id="included-heading" className={styles.sectionTitle}>Det här ingår</h2>
+    <ul className={styles.includedList}>
+      {included.map((item) => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
+    <p className={styles.price}>Pris: [PRIS] kr</p>
+  </section>
+
+  <section className={styles.formColumn}>
+    <InterestForm />
+  </section>
+</div>
       <section className={styles.section} aria-labelledby="faq-heading">
   <h2 id="faq-heading" className={styles.sectionTitle}>Vanliga frågor</h2>
   <Accordion items={faq} />
