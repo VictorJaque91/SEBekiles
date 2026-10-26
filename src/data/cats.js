@@ -172,7 +172,7 @@ export const cats = [
         featured: false,
         born: '2021-10-27',
         color: { name: 'Svartsköldpadd-vit', ems: 'f 09' },
-        image: { src: '/images/cats/zara.wepb', alt: 'Zara, en svartsköldpadd-vit sibirisk katt' },
+        image: { src: '/images/cats/zara.webp', alt: 'Zara, en svartsköldpadd-vit sibirisk katt' },
         pedigreeUrl: null,
         story: 'Zara har bott hos fodervärden Johanna och trivdes inte som fertil, så vi valde för hennes och Johannas skull att kastrera henne.',
         healthTests: [],

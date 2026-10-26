@@ -1,18 +1,37 @@
 import { breedNames, sexLabel, formatDate, getAge } from '../../utils/catHelpers.js'
 import styles from './CatCard.module.css'
+import { useState } from 'react'
+import ImageModal from '../ImageModal/ImageModal.jsx'
 
 export default function CatCard({ cat }) {
+  const [imageOpen, setImageOpen] = useState(false)
+
   return (
     <article className={styles.card}>
       {cat.image.src ? (
-        <img
-          src={cat.image.src}
-          alt={cat.image.alt}
-          width="800"
-          height="600"
-          loading="lazy"
-          className={styles.image}
-        />
+        <>
+          <button
+            type="button"
+            className={styles.imageButton}
+            onClick={() => setImageOpen(true)}
+            aria-label={`Visa större bild på ${cat.callName}`}
+          >
+            <img
+              src={cat.image.src}
+              alt={cat.image.alt}
+              width="800"
+              height="600"
+              loading="lazy"
+              className={styles.image}
+            />
+          </button>
+          <ImageModal
+            image={cat.image}
+            caption={cat.callName}
+            open={imageOpen}
+            onClose={() => setImageOpen(false)}
+          />
+        </>
       ) : (
         <div className={styles.placeholder} aria-hidden="true" />
       )}
@@ -36,6 +55,7 @@ export default function CatCard({ cat }) {
           <dt>Färg</dt>
           <dd>{cat.color.name} ({cat.color.ems})</dd>
         </dl>
+        {cat.story && <p className={styles.story}>{cat.story}</p>}
 
         {cat.pedigreeUrl && (
           <a

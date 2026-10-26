@@ -27,27 +27,27 @@ export default function Header() {
                 </svg>
             </button>
 
-<nav className={styles.nav} aria-label="Huvudmeny">
-        <ul
-          id="huvudmeny"
-          className={open ? `${styles.navList} ${styles.open}` : styles.navList}
-        >
-          {mainLinks.map((link) => (
-            <li key={link.to}>
-              <NavLink
-                to={link.to}
-                end={link.to === '/'}
-                onClick={() => setOpen(false)}
-                className={({ isActive }) =>
-                  isActive ? `${styles.link} ${styles.active}` : styles.link
-                }
-              >
-                {link.label}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </header>
+            <nav className={styles.nav} aria-label="Huvudmeny">
+                <ul
+                    id="huvudmeny"
+                    className={open ? `${styles.navList} ${styles.open}` : styles.navList}
+                >
+                    {mainLinks.map((link) => (
+                        <li key={link.to}>
+                            <NavLink
+                                to={link.to}
+                                end={link.to === '/'}
+                                onClick={() => setOpen(false)}
+                                className={({ isActive }) =>
+                                    isActive ? `${styles.link} ${styles.active}` : styles.link
+                                }
+                            >
+                                {link.label}
+                            </NavLink>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+        </header>
     )
 }

@@ -53,3 +53,7 @@ main {
   white-space: nowrap;
   border: 0;
 }
+
+body:has(dialog[open]) {
+  overflow: hidden;
+}
