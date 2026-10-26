@@ -46,7 +46,7 @@ export const cats = [
         healthTests: [
             { name: 'PK-def', result: 'Normal', source: 'MyCat DNA', date: null },
             { name: 'Blodgrupp', result: 'A eller AB (bärare av b2)', source: 'MyCat DNA', date: null },
-            { name: 'CS-bärare', result: 'Ej bärare', source: 'MyCat DNA', date: null },
+            { name: 'Colourpoint-anlag (CS)', result: 'Ej bärare', source: 'MyCat DNA', date: null },
             { name: 'Mag-tarmparasiter', result: 'Negativt', source: 'SVA', date: '2025-08' },
         ],
     },
@@ -68,7 +68,7 @@ export const cats = [
         healthTests: [
             { name: 'PK-def', result: 'Normal', source: 'MyCat DNA', date: null },
             { name: 'Blodgrupp', result: 'A', source: 'MyCat DNA', date: null },
-            { name: 'CS-bärare', result: 'Ej bärare', source: 'MyCat DNA', date: null },
+            { name: 'Colourpoint-anlag (CS)', result: 'Ej bärare', source: 'MyCat DNA', date: null },
         ],
     },
     {
