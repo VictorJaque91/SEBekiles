@@ -3,8 +3,9 @@ import styles from './CatCard.module.css'
 import { useState } from 'react'
 import ImageModal from '../ImageModal/ImageModal.jsx'
 
-export default function CatCard({ cat }) {
+export default function CatCard({ cat, headingLevel = 2 }) {
   const [imageOpen, setImageOpen] = useState(false)
+  const Heading = `h${headingLevel}`
 
   return (
     <article className={styles.card}>
@@ -42,7 +43,7 @@ export default function CatCard({ cat }) {
           <li>{sexLabel(cat)}</li>
         </ul>
 
-        <h2 className={styles.name}>{cat.callName}</h2>
+        <Heading className={styles.name}>{cat.callName}</Heading>
         <p className={styles.registered}>
           {[...cat.titles, cat.registeredName].join(' ')}
         </p>
