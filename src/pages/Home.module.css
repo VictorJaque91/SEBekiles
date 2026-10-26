@@ -81,9 +81,11 @@
   line-height: 1.5;
 }
 
-.trustIcon {
-  flex: none;
-  width: auto;
+.trustImage {
+  display: block;
+  width: 100%;
+  height: 3rem;
+  object-fit: contain;
 }
 
 .current {

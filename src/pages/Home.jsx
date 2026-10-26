@@ -8,7 +8,7 @@ import styles from './Home.module.css'
 
 
 const trustPoints = [
-  { text: 'Certifierad uppfödare', icon: '/images/certifierad.webp' },
+  { text: 'Certifierad uppfödare', image: '/images/certifierad.webp' },
   { text: 'Tillstånd från Länsstyrelsen' },
   { text: 'Medlem i [KATTKLUBB]' },
   { text: 'Hälsotestade avelskatter' },
@@ -55,10 +55,11 @@ export default function Home() {
         <ul className={styles.trustList}>
           {trustPoints.map((point) => (
             <li key={point.text} className={styles.trustItem}>
-              {point.icon && (
-                <img src={point.icon} alt="" height="40" className={styles.trustIcon} />
+              {point.image ? (
+                <img src={point.image} alt={point.text} className={styles.trustImage} />
+              ) : (
+                point.text
               )}
-              {point.text}
             </li>
           ))}
         </ul>
