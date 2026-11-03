@@ -1,0 +1,112 @@
+.intro {
+  max-width: 70rem;
+  margin: 3rem auto 0;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3.5rem;
+}
+
+.photo {
+  flex: 1 1 22rem;
+  min-width: 0;
+  aspect-ratio: 4 / 5;
+  max-height: 34rem;
+  border-radius: 24px;
+  background: #e9eef2;
+}
+
+.introText {
+  flex: 1 1 26rem;
+  min-width: 0;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: #3d3d3d;
+}
+
+.introText p {
+  margin: 1rem 0 0;
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.introText .eyebrow {
+  margin: 0;
+}
+
+.introTitle {
+  margin: 0.75rem 0 0;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  line-height: 1.25;
+  font-weight: 700;
+  color: #222;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.section {
+  max-width: 70rem;
+  margin: 5rem auto 0;
+  padding: 0 1.5rem;
+}
+
+.sectionTitle {
+  margin: 0 0 2rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 36rem) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 60rem) {
+  .cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.card {
+  padding: 1.75rem;
+  border-radius: 20px;
+  background: #f4f7fa;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.cardText {
+  margin: 0.625rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #3d3d3d;
+}

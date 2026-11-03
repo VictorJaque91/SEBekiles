@@ -46,7 +46,7 @@ export const cats = [
         healthTests: [
             { name: 'PK-def', result: 'Normal', source: 'MyCat DNA', date: null },
             { name: 'Blodgrupp', result: 'A eller AB (bärare av b2)', source: 'MyCat DNA', date: null },
-            { name: 'CS-bärare', result: 'Ej bärare', source: 'MyCat DNA', date: null },
+            { name: 'Colourpoint-anlag (CS)', result: 'Ej bärare', source: 'MyCat DNA', date: null },
             { name: 'Mag-tarmparasiter', result: 'Negativt', source: 'SVA', date: '2025-08' },
         ],
     },
@@ -68,7 +68,7 @@ export const cats = [
         healthTests: [
             { name: 'PK-def', result: 'Normal', source: 'MyCat DNA', date: null },
             { name: 'Blodgrupp', result: 'A', source: 'MyCat DNA', date: null },
-            { name: 'CS-bärare', result: 'Ej bärare', source: 'MyCat DNA', date: null },
+            { name: 'Colourpoint-anlag (CS)', result: 'Ej bärare', source: 'MyCat DNA', date: null },
         ],
     },
     {
@@ -172,7 +172,7 @@ export const cats = [
         featured: false,
         born: '2021-10-27',
         color: { name: 'Svartsköldpadd-vit', ems: 'f 09' },
-        image: { src: '/images/cats/zara.wepb', alt: 'Zara, en svartsköldpadd-vit sibirisk katt' },
+        image: { src: '/images/cats/zara.webp', alt: 'Zara, en svartsköldpadd-vit sibirisk katt' },
         pedigreeUrl: null,
         story: 'Zara har bott hos fodervärden Johanna och trivdes inte som fertil, så vi valde för hennes och Johannas skull att kastrera henne.',
         healthTests: [],
@@ -214,7 +214,7 @@ export const cats = [
     {
         id: 'trym',
         callName: 'Trym',
-        registeredName: 'S*Dunderklumpen´s Miss Cubay ',
+        registeredName: 'SE*Iskär’s Trym af Santa',
         titles: [],
         breed: 'SIB',
         sex: 'male',

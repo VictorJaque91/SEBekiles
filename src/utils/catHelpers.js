@@ -29,3 +29,11 @@ export function getAge(born, today = new Date()) {
 
   return years === 0 ? `${months} mån` : `${years} år`
 }
+
+export function formatTestDate(value) {
+  const options = value.length === 7
+  ? {year: 'numeric', month: 'long' }
+  : {year: 'numeric', month: 'long', day: 'numeric'}
+
+  return new Date(value).toLocaleDateString('sv-SE', options)
+}

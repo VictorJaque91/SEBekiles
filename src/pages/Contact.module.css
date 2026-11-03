@@ -1,0 +1,66 @@
+.layout {
+  max-width: 70rem;
+  margin: 3rem auto 0;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 3rem;
+}
+
+.ways {
+  flex: 1 1 18rem;
+  min-width: 0;
+}
+
+.formColumn {
+  flex: 2 1 28rem;
+  min-width: 0;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid #e3eaf0;
+  border-radius: 18px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+a.card:hover {
+  border-color: var(--accent);
+}
+
+.static {
+  border-color: transparent;
+  background: #f4f7fa;
+}
+
+.icon {
+  flex: none;
+  color: var(--accent);
+}
+
+.label {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.value {
+  display: block;
+  font-size: 1rem;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}

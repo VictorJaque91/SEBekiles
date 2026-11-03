@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   border: 1px solid #e3eaf0;
-  border-radius: 20px;
+  border-radius: 15px;
   overflow: hidden;
   background: #fff;
 }
@@ -85,4 +85,23 @@
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: 0.875rem;
+}
+.imageButton {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.imageButton:focus-visible {
+  outline-offset: -4px;
+}
+
+.story {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #3d3d3d;
 }
