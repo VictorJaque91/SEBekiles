@@ -1,7 +1,73 @@
+import { cats } from '../data/cats.js'
+import PageHeader from '../components/PageHeader/PageHeader.jsx'
+import ButtonLink from '../components/ButtonLink/ButtonLink.jsx'
+import styles from './About.module.css'
+
+const credentials = [
+  {
+    title: 'Certifierad uppfödare',
+    text: 'Annika har gått diplomeringsutbildningen, Uppfödarettan och certifiering.',
+  },
+  {
+    title: 'PawPeds G1–G3',
+    text: 'Utbildning i kattgenetik och avelsplanering.',
+  },
+  {
+    title: 'Länsstyrelsens tillstånd',
+    text: 'Tillstånd från Länsstyrelsen [LÄN] att föda upp och sälja katter från egen uppfödning.',
+  },
+  {
+    title: '[KATTKLUBB]',
+    text: 'Medlemmar i kattklubben och aktiva på utställningar.',
+  },
+]
+
+const listFormat = new Intl.ListFormat('sv', { style: 'long', type: 'conjunction' })
+
 export default function About() {
-    return (
-        <>
-            <title>Om oss – SE*Bekiles</title>
-        </>
-    )
+  const homeCatNames = cats
+    .filter((cat) => cat.status === 'home')
+    .map((cat) => cat.callName)
+    .sort((a, b) => a.localeCompare(b, 'sv'))
+
+  return (
+    <>
+      <title>Om oss – SE*Bekiles</title>
+      <PageHeader title="Om oss" />
+
+      <section className={styles.intro} aria-labelledby="intro-heading">
+        {/* TODO: byt mot ett foto på Annika och Bernt med katterna */}
+        <div className={styles.photo} aria-hidden="true" />
+        <div className={styles.introText}>
+          <p className={styles.eyebrow}>Sedan 2013</p>
+          <h2 id="intro-heading" className={styles.introTitle}>Ett kattokigt par i Linköping</h2>
+          <p>
+            Vi har fött upp Sibiriska katter sedan 2013. Katterna bor med oss hemma,
+            och just nu delar vi vardagen med {listFormat.format(homeCatNames)}.
+          </p>
+          <p>
+            Vi har inga hemmaboende barn, så när en kull ska socialiseras ”lånar” vi
+            in barn så att kattungarna vänjer sig vid människor i alla åldrar. Vi gillar
+            utställningar och att träffa andra kattokiga människor.
+          </p>
+          <div className={styles.actions}>
+            <ButtonLink to="/katter">Möt våra katter</ButtonLink>
+            <ButtonLink to="/kontakt" variant="secondary">Kontakta oss</ButtonLink>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.section} aria-labelledby="credentials-heading">
+        <h2 id="credentials-heading" className={styles.sectionTitle}>Utbildning och trygghet</h2>
+        <ul className={styles.cards}>
+          {credentials.map((item) => (
+            <li key={item.title} className={styles.card}>
+              <h3 className={styles.cardTitle}>{item.title}</h3>
+              <p className={styles.cardText}>{item.text}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </>
+  )
 }

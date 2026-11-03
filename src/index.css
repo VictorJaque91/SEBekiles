@@ -1,11 +1,15 @@
 :root {
   --ink: #2a2a2a;
-  --muted: #5e5e5e;
+  --muted: #555555;
   --accent: #3b6f92;
   --accent-light: #77a9ca;
   --line: #e6e6e6;
   --font-serif: 'Merriweather', Georgia, serif;
-  --font-sans: 'Josefin Sans', sans-serif;
+  --font-sans: 'Lato', sans-serif;
+}
+
+html {
+  font-size: 106.25%;
 }
 
 *,
@@ -16,11 +20,18 @@
 
 body {
   margin: 0;
-  font-family: var(--font-serif);
-  font-weight: 300;
+  font-family: var(--font-sans);
+  font-weight: 400;
   line-height: 1.6;
   color: var(--ink);
   background: #fff;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
 }
 
 a {
@@ -34,7 +45,7 @@ a {
 
 #root {
   min-height: 100vh;
-  min height: 100dvh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }

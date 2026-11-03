@@ -214,7 +214,7 @@ export const cats = [
     {
         id: 'trym',
         callName: 'Trym',
-        registeredName: 'S*Dunderklumpen´s Miss Cubay ',
+        registeredName: 'SE*Iskär’s Trym af Santa',
         titles: [],
         breed: 'SIB',
         sex: 'male',
