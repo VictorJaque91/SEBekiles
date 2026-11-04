@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { footerLinks } from '../../data/navigation.js'
+import { county, currentClub } from '../../data/breeder.js'
 import styles from './Footer.module.css'
 
 export default function Footer() {
@@ -17,7 +18,7 @@ export default function Footer() {
                 </div>
 
                 <p className={styles.text}>
-                    Uppfödning av Sibirisk katt med tillstånd från Länsstyrelsen [LÄN]. Medlem i [KATTKLUBB].
+                    Uppfödning av Sibirisk katt med tillstånd från Länsstyrelsen {county}. Medlem i {currentClub()}.
                 </p>
 
                 <nav aria-label="Sidfot">

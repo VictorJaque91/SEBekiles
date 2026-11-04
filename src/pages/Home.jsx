@@ -4,17 +4,18 @@ import { news } from '../data/news.js'
 import CatCard from '../components/CatCard/CatCard.jsx'
 import NewsCard from '../components/NewsCard/NewsCard.jsx'
 import ButtonLink from '../components/ButtonLink/ButtonLink.jsx'
+import { currentClub } from '../data/breeder.js'
 import styles from './Home.module.css'
 
 
-const trustPoints = [
-  { text: 'Certifierad uppfödare', image: '/images/certifierad.webp' },
-  { text: 'Tillstånd från Länsstyrelsen' },
-  { text: 'Medlem i [KATTKLUBB]' },
-  { text: 'Hälsotestade avelskatter' },
-]
-
 export default function Home() {
+  const trustPoints = [
+    { text: 'Certifierad uppfödare', image: '/images/certifierad.webp' },
+    { text: 'Tillstånd från Länsstyrelsen' },
+    { text: `Medlem i ${currentClub()}` },
+    { text: 'Hälsotestade avelskatter' },
+  ]
+
   const featuredCats = cats.filter((cat) => cat.featured && cat.status === 'home')
   const latestNews = [...news]
     .sort((a, b) => b.date.localeCompare(a.date))
@@ -22,7 +23,7 @@ export default function Home() {
 
   return (
     <>
-      <title>SE*Bekiles – Sibirisk katt i Linköping</title>
+      <title>SE*Bekiles – en liten uppfödning av Sibirisk katt</title>
 
       <section className={styles.hero} aria-labelledby="hero-heading">
         <div className={styles.heroText}>
@@ -41,9 +42,8 @@ export default function Home() {
           </div>
         </div>
         <img
-          /* TODO: byt mot riktig bild från mamma + skriv alt-text */
-          src="/images/hero-placeholder.png"
-          alt="[BESKRIV BILDEN]"
+          src="/images/hero.webp"
+          alt="Sex sibiriska kattungar i svart, grått, rött och tabby leker på en vit filt"
           width="1200"
           height="900"
           fetchPriority="high"
@@ -70,10 +70,10 @@ export default function Home() {
           <div>
             <p className={styles.eyebrow}>Aktuellt</p>
             <h2 id="current-heading" className={styles.currentTitle}>
-              Nästa kull: vi väntar in Vega
+              Nästa kull: Vega, sommaren 2027
             </h2>
             <p className={styles.currentText}>
-              Intresseanmälan är öppen – läs mer om hur det går till.
+              Planen är att Vega paras i juni. Intresseanmälan är öppen.
             </p>
           </div>
           <Link to="/kattungar" className={styles.textLink}>
@@ -85,6 +85,9 @@ export default function Home() {
       <section className={styles.section} aria-labelledby="news-heading">
         <div className={styles.sectionHeader}>
           <h2 id="news-heading" className={styles.sectionTitle}>Senaste nytt</h2>
+          <Link to="/nyheter" className={styles.textLink}>
+            Alla nyheter <span aria-hidden="true">→</span>
+          </Link>
         </div>
         <div className={styles.newsGrid}>
           {latestNews.map((item) => (

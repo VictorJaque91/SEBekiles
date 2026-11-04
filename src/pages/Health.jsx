@@ -13,8 +13,8 @@ const glossary = [
     description: 'Hypertrofisk kardiomyopati. Hjärtmuskeln blir förtjockad, den vanligaste hjärtsjukdomen hos katt.',
   },
   {
-    term: 'SMA',
-    description: 'Spinal muskelatrofi. Nervceller i ryggmärgen förtvinar, vilket ger muskelsvaghet.',
+    term: 'PKD',
+    description: 'Polycystisk njursjukdom. Njurarna scannas med ultraljud för att upptäcka cystor.',
   },
   {
     term: 'Blodgrupp',
@@ -25,7 +25,6 @@ const glossary = [
 export default function Health() {
   const testedCats = cats.filter((cat) => cat.healthTests.length > 0)
   const homeCats = testedCats.filter((cat) => cat.status === 'home')
-  const movedCats = testedCats.filter((cat) => cat.status === 'moved')
 
   return (
     <>
@@ -56,16 +55,6 @@ export default function Health() {
         </div>
       </section>
 
-      {movedCats.length > 0 && (
-        <section className={styles.section} aria-labelledby="moved-heading">
-          <h2 id="moved-heading" className={styles.sectionTitle}>Katter som flyttat</h2>
-          <div className={styles.list}>
-            {movedCats.map((cat) => (
-              <HealthTable key={cat.id} cat={cat} />
-            ))}
-          </div>
-        </section>
-      )}
     </>
   )
 }

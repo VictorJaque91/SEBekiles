@@ -8,7 +8,6 @@ const filters = [
   { id: 'all', label: 'Alla', test: (cat) => cat.status === 'home' },
   { id: 'male', label: 'Hanar', test: (cat) => cat.status === 'home' && cat.sex === 'male' },
   { id: 'female', label: 'Honor', test: (cat) => cat.status === 'home' && cat.sex === 'female' },
-  { id: 'moved', label: 'Har flyttat', test: (cat) => cat.status === 'moved' },
 ]
 
 export default function Cats() {

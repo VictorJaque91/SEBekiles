@@ -61,3 +61,7 @@
 .submit:hover {
   background: #24506d;
 }
+.submit:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}

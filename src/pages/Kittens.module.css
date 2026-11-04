@@ -142,3 +142,123 @@
   flex: 2 1 28rem;
   min-width: 0;
 }
+.notice {
+  margin: 0 0 1.5rem;
+  font-size: 1.0625rem;
+  color: #3d3d3d;
+}
+
+.kittens {
+  flex: 1 1 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(11rem, 100%), 1fr));
+  gap: 1.25rem;
+}
+
+.kitten {
+  margin: 0;
+}
+
+.kittenImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 16px;
+  object-fit: cover;
+  background: #e2e9ef;
+}
+
+.kittenCaption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #3d3d3d;
+}
+
+.kittenName {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.kittenStatus {
+  align-self: flex-start;
+  margin-top: 0.25rem;
+  padding: 0.125rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.available {
+  background: #e5f4e4;
+  color: #1f5a2a;
+}
+
+.reserved {
+  background: #f9eeda;
+  color: #6b4a0c;
+}
+
+.sold,
+.staying {
+  background: #f0efec;
+  color: #444;
+}
+
+.pastGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+  gap: 1.25rem;
+}
+
+.pastLitter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+}
+
+.pastLitter .litterTitle,
+.pastLitter p {
+  margin: 0;
+}
+
+.pastLitter > :last-child {
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.pastKittens {
+  line-height: 1.6;
+}
+
+.pastImageButton {
+  display: block;
+  width: calc(100% + 3rem);
+  margin: -1.5rem -1.5rem 0.75rem;
+  padding: 0;
+  border: none;
+  border-radius: 19px 19px 0 0;
+  overflow: hidden;
+  background: none;
+  cursor: pointer;
+}
+
+.pastImageButton:focus-visible {
+  outline-offset: -4px;
+}
+
+.pastImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}

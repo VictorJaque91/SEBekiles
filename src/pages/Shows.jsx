@@ -1,18 +1,18 @@
 import { useState } from 'react'
 import { cats } from '../data/cats.js'
-import { shows } from '../data/shows.js'
+import { shows, formerCatNames } from '../data/shows.js'
 import { formatDate } from '../utils/catHelpers.js'
 import PageHeader from '../components/PageHeader/PageHeader.jsx'
 import styles from './Shows.module.css'
 
 // TODO: låt mamma läsa igenom förklaringarna.
 const abbreviations = [
-  { term: 'EX 1–3', text: 'Excellent med placering 1–3 i sin klass.' },
+  { term: 'EX 1–4', text: 'Excellent med placering 1–4 i sin klass.' },
   { term: 'CAC / CAP', text: 'Certifikat mot titeln Champion (CAC) eller Premier för kastrater (CAP).' },
   { term: 'CACIB / CAPIB', text: 'Internationellt certifikat mot Internationell Champion eller Premier.' },
   { term: 'CAGCIB / CAGPIB', text: 'Certifikat mot Grand Internationell Champion eller Premier.' },
   { term: 'CACS / CAPS', text: 'Certifikat mot Supreme Champion eller Premier, den högsta titeln.' },
-  { term: 'CACC / CACJ', text: 'Certifikat för kattungar (Kitten Champion) och juniorer (Junior Champion).' },
+  { term: 'CACC / CACJ', text: 'Certifikat för kattungar och juniorer, mot Kitten Champion och Junior Champion.' },
   { term: 'HP', text: 'Honour Prize, ges till katter som redan är Supreme Champion eller Premier.' },
   { term: 'NOM', text: 'Nominerad till Best in Show.' },
   { term: 'BIV', text: 'Best in Variety, bäst av sin ras och variant på utställningen.' },
@@ -20,6 +20,10 @@ const abbreviations = [
 ]
 
 const catsById = new Map(cats.map((cat) => [cat.id, cat]))
+
+function catName(id) {
+  return catsById.get(id)?.callName ?? formerCatNames[id] ?? id
+}
 
 function isTitle(result) {
   return /champion|premier/i.test(result)
@@ -39,7 +43,7 @@ function groupByYear(list) {
 const catOptions = [...new Set(shows.flatMap((show) => show.results.map((r) => r.cat)))]
   .map((id) => ({
     id,
-    name: catsById.get(id)?.callName ?? id,
+    name: catName(id),
     count: shows.filter((show) => show.results.some((r) => r.cat === id)).length,
   }))
   .sort((a, b) => a.name.localeCompare(b.name, 'sv'))
@@ -131,7 +135,7 @@ export default function Shows() {
                   <tbody>
                     {show.results.map((r) => (
                       <tr key={r.cat}>
-                        <th scope="row">{catsById.get(r.cat)?.callName ?? r.cat}</th>
+                        <th scope="row">{catName(r.cat)}</th>
                         <td>
                           {isTitle(r.result) ? <strong className={styles.title}>{r.result}</strong> : r.result}
                         </td>

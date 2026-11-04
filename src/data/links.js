@@ -1,22 +1,23 @@
+// En länk utan url visas som text. Fyll i url när den finns.
 export const linkGroups = [
   {
     id: 'uppfodare',
-    title: 'Uppfödare vi samarbetat med',
+    title: 'Uppfödare vi samarbetar med',
     links: [
       {
-        name: 'S*Dunderklumpens Maine Coon',
-        description: 'Susanne Johansson, Nyköping',
-        url: 'https://www.dunderklumpens.com/',
+        name: 'SE*Iskär’s Sibirisk katt',
+        description: 'Jennie Kjellson Åberg, Alnö',
+        url: null,
       },
       {
-        name: 'SE*Rubycat’s',
-        description: 'Birgitta Hellström, Uppsala',
-        url: 'http://www.rubycats.se/',
+        name: 'S*Lurvtassens Sibiriska katter',
+        description: 'Katarina Eklöf, Ljusne',
+        url: null,
       },
       {
-        name: 'S*SinhTsunKitthas',
-        description: 'Marina Hammarberg, Sandviken',
-        url: 'https://sinhtsunkitthas.se/',
+        name: 'SE*RareWind’s Katter',
+        description: 'Ylwa Rådlund, Bergvik',
+        url: null,
       },
     ],
   },
@@ -37,7 +38,7 @@ export const linkGroups = [
     links: [
       {
         name: 'SE*Bekiles blogg',
-        description: 'Bloggen vi använder när vi har kull',
+        description: 'Bloggen vi har använt för våra kullar',
         url: 'https://bekiles.blogspot.com/',
       },
     ],

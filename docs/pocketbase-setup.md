@@ -1,49 +1,59 @@
-# Uppdrag: sätt upp PocketBase för SE*Bekiles
+# Uppdrag: sätt upp hemsidan och PocketBase för SE*Bekiles
 
-Du kör på **Proxmox-värden**. Sätt upp PocketBase som backend för min mammas hemsida
-för kattuppfödning. Det berör två containrar:
+Du kör på **Proxmox-värden**. Sätt upp min mammas hemsida för kattuppfödning med en backend
+där hon kan ändra innehållet själv. Hemsidan är en React-app (Vite) i repot
+https://github.com/VictorJaque91/SEBekiles. Den läser i dag sin data från JavaScript-filer
+och ska senare hämta den från PocketBase.
 
-1. **En ny LXC-container** som du skapar och där PocketBase körs.
-2. **Den befintliga webbcontainern**, där hemsidan och reverse proxyn (nginx eller Caddy)
-   redan körs. Där ska du bara lägga till proxy-regler för PocketBase.
+Det berör tre containrar:
 
-Hemsidan är en React-app (Vite) som i dag läser sin data från JavaScript-filer. Den ska
-i stället hämta datan från PocketBase, och mamma ska kunna ändra innehållet själv i
-PocketBase admin-gränssnitt.
+| | Container | Vad du gör |
+|---|---|---|
+| A | **Ny:** `pocketbase` | Skapa. Installera PocketBase med tabeller och backup. |
+| B | **Ny:** `sebekiles-web` | Skapa. Bygg hemsidan och servera den med nginx. Skicka `/api/` och `/_/` vidare till A. |
+| C | **Befintlig:** den reverse proxy som tar emot trafik utifrån (där min portfolio ligger) | Lägg bara till ett site-block för mammas domän som pekar på B. |
 
 ## Säkerhetsregler, gäller hela uppdraget
 
 - Du kör på värden som styr alla mina virtuella maskiner och containrar.
-  **Rör inga andra VM:ar eller containrar** än den nya PocketBase-containern och den webbcontainer jag pekar ut.
+  **Rör inga andra VM:ar eller containrar** än A, B och C ovan, och i C bara det som står i steg 9.
 - Ändra inte värdens nätverk, lagring, brandvägg eller Proxmox-inställningar.
 - Visa vad du tänker göra innan varje steg, och vänta på mitt ja innan du skapar,
   ändrar eller startar om något.
-- Gör **en snapshot av webbcontainern** innan du ändrar något i den.
-- Skriv aldrig lösenord i filer eller kommandohistorik. Fråga mig när de behövs.
+- Gör **en snapshot av C** innan du ändrar något där.
+- Skriv aldrig lösenord eller nycklar i filer eller kommandohistorik. Fråga mig när de behövs.
 
 ## Steg 0: Kartlägg och fråga
 
-1. Kör `pct list` och `qm list` och visa resultatet.
+1. Kör `pct list`, `qm list` och `pvesm status` och visa resultatet.
 2. Fråga mig:
-   - vilken container som är webbcontainern,
-   - vilken lagring den nya containern ska ligga på (visa `pvesm status`),
-   - vilket nätverk den ska använda: bridge (t.ex. `vmbr0`), och DHCP eller fast IP,
-   - vilken domän hemsidan har.
-3. Ta reda på vilken webbserver webbcontainern kör (`pct exec <id> -- ...`),
-   och var dess konfiguration för hemsidan ligger. Visa den, men ändra inget än.
+   - vilken container som är C, alltså den som tar emot trafik på port 80/443,
+   - vilken lagring A och B ska ligga på,
+   - vilket nätverk de ska använda: bridge (t.ex. `vmbr0`), och DHCP eller fasta IP-adresser
+     (fasta rekommenderas, eftersom proxyreglerna pekar på dem),
+   - mammas domän, och om DNS redan pekar på min publika IP,
+   - om repot är publikt eller privat. Om privat: vi lägger in en read-only deploy key i B.
+3. Ta reda på vilken webbserver C kör (nginx eller Caddy), hur den hanterar certifikat
+   (t.ex. certbot eller Caddys automatiska HTTPS) och var site-konfigurationen ligger.
+   Visa det, men ändra inget än.
 
-## Steg 1: Skapa PocketBase-containern
+## Steg 1: Skapa containrarna A och B
 
+För båda:
 - Nästa lediga id: `pvesh get /cluster/nextid`.
 - Mall: senaste Debian 12 standard via `pveam update` och `pveam available --section system`.
-- Inställningar: **unprivileged**, hostname `pocketbase`, 1 kärna, 512 MB RAM,
-  8 GB disk, `onboot=1`. Root-lösenord eller SSH-nyckel: fråga mig.
-- Starta containern och kontrollera att den har nätverk (`pct exec <id> -- ping -c1 deb.debian.org`).
-- Kör `apt update && apt upgrade -y` och installera `curl`, `unzip` och `ca-certificates`.
+- **Unprivileged**, `onboot=1`. Root-lösenord eller SSH-nyckel: fråga mig.
+- Starta, kontrollera nätverk (`pct exec <id> -- ping -c1 deb.debian.org`),
+  kör `apt update && apt upgrade -y` och installera `curl`, `unzip`, `ca-certificates` och `git`.
 
-All installation i steg 2–4 görs i den nya containern via `pct exec <id> -- ...`.
+| | Hostname | Kärnor | RAM | Disk |
+|---|---|---|---|---|
+| A | `pocketbase` | 1 | 512 MB | 8 GB |
+| B | `sebekiles-web` | 2 | 2048 MB (bygget behöver minne) | 8 GB |
 
-## Steg 2: Installera PocketBase
+All installation görs inne i respektive container via `pct exec <id> -- ...`.
+
+## Steg 2: Installera PocketBase (A)
 
 1. Hämta **senaste stabila versionen** för linux_amd64 från
    https://github.com/pocketbase/pocketbase/releases. Kontrollera checksumman.
@@ -53,7 +63,7 @@ All installation i steg 2–4 görs i den nya containern via `pct exec <id> -- .
 4. Lägg programmet i `/opt/pocketbase/` och data i `/opt/pocketbase/pb_data/`,
    ägda av `pocketbase`.
 
-## Steg 3: Kör som tjänst
+## Steg 3: PocketBase som tjänst (A)
 
 Skapa en systemd-tjänst `pocketbase.service` som:
 - kör `pocketbase serve --http=0.0.0.0:8090` som användaren `pocketbase`,
@@ -65,10 +75,9 @@ Aktivera och starta den, och visa `systemctl status pocketbase`.
 Skapa ett superuser-konto med `pocketbase superuser create`. Fråga mig efter e-post och
 lösenord.
 
-## Steg 4: Skapa tabellerna som en migrering
+## Steg 4: Tabellerna som en migrering (A)
 
-Repot med hemsidan: https://github.com/VictorJaque91/SEBekiles.
-Läs `src/data/cats.js`, `news.js`, `litters.js` och `shows.js` för att se fälten
+Läs `src/data/cats.js`, `news.js`, `litters.js` och `shows.js` i repot för att se fälten
 som tabellerna ska motsvara.
 
 Skriv tabellerna som en JS-migrering i `/opt/pocketbase/pb_migrations/`, så att
@@ -93,8 +102,8 @@ om versionen stöder det, så att mamma förstår fälten.
 | `color_ems` | text | t.ex. `n 22` |
 | `image` | file | en fil, jpeg/png/webp, max 10 MB, thumbs `800x600` och `400x400` |
 | `image_alt` | text | bildbeskrivning |
-| `pedigree_url` | url | valfri |
-| `story` | text | valfri, för katter som flyttat |
+| `pedigree_url` | url | valfri (PawPeds) |
+| `sverak_url` | url | valfri (SVERAKs stambok) |
 | `sort_order` | number | valfri |
 
 ### `health_tests`
@@ -114,19 +123,37 @@ om versionen stöder det, så att mamma förstår fälten.
 | `title` | text | obligatorisk |
 | `date` | date | obligatorisk |
 | `text` | text | obligatorisk |
-| `image` | file | valfri, en fil, jpeg/png/webp, max 10 MB, thumbs `900x600` |
-| `image_alt` | text | |
 | `published` | bool | standard `true` |
 
 ### `litters`
 
 | Fält | Typ | Regler |
 |---|---|---|
-| `mother` | relation → `cats` | obligatorisk, en post |
+| `name` | text | valfri, kullens namn, t.ex. `Yellowstonekullen` |
+| `mother` | relation → `cats` | valfri, en post |
+| `mother_name` | text | valfri, används när honan inte finns i `cats` |
 | `father` | text | valfri (hanen är oftast extern) |
 | `status` | select | `planned`, `mated`, `born`, `ready`, `archived` |
 | `planned_date`, `mated_date`, `born_date`, `ready_date` | date | alla valfria |
 | `note` | text | valfri |
+| `kitten_count` | number | valfri, för tidigare kullar |
+| `kitten_names` | json | valfri, lista med namn för tidigare kullar |
+| `blog_url` | url | valfri |
+| `images` | file | valfri, flera filer, jpeg/png/webp, max 10 MB per fil, thumbs `1000x750` |
+| `images_alt` | json | valfri, bildbeskrivningar i samma ordning som `images` |
+
+### `kittens`
+
+| Fält | Typ | Regler |
+|---|---|---|
+| `litter` | relation → `litters` | obligatorisk, en post, radera kaskad |
+| `name` | text | obligatorisk |
+| `sex` | select | `male`, `female` |
+| `color_name` | text | |
+| `color_ems` | text | |
+| `status` | select | `available`, `reserved`, `sold`, `staying` |
+| `image` | file | valfri, en fil, jpeg/png/webp, max 10 MB, thumbs `400x400` |
+| `image_alt` | text | |
 
 ### `shows` och `show_results`
 
@@ -143,7 +170,8 @@ om versionen stöder det, så att mamma förstår fälten.
 | Fält | Typ | Regler |
 |---|---|---|
 | `show` | relation → `shows` | obligatorisk, en post, radera kaskad |
-| `cat` | relation → `cats` | obligatorisk, en post |
+| `cat` | relation → `cats` | valfri, en post |
+| `cat_name` | text | valfri, används för katter som inte finns i `cats` längre |
 | `result` | text | obligatorisk, t.ex. `CAC, NOM` |
 | `judge` | text | |
 
@@ -154,49 +182,90 @@ Skapa också en auth-samling `editors`. Den ska användas av ett eget admin-grä
 För alla tabellerna ovan:
 - **List och View:** öppet för alla (tom regel `""`).
   - Undantag för `news`: `published = true || @request.auth.collectionName = "editors"`.
-  - Undantag för `litters`: `status != "archived" || @request.auth.collectionName = "editors"`.
 - **Create, Update och Delete:** `@request.auth.collectionName = "editors"`.
 
 Superusers går förbi reglerna ändå, så mamma kan arbeta i admin-gränssnittet från början.
 
 Kör migreringen och visa att alla tabeller finns.
 
-## Steg 5: Inställningar och backup
+## Steg 5: PocketBase-inställningar och backup (A)
 
-- **Applikationsnamn:** `SE*Bekiles`. **App URL:** `https://<domänen>`.
+- **Applikationsnamn:** `SE*Bekiles`. **App URL:** `https://<mammas domän>`.
 - **PocketBase-backup:** slå på automatisk backup varje natt och behåll de 7 senaste.
 - **Proxmox-backup:** visa befintliga backupjobb (`cat /etc/pve/jobs.cfg`) och föreslå hur
-  den nya containern ska läggas till i dem. Ändra inte ett befintligt jobb utan mitt ja.
+  A och B ska läggas till. Ändra inte ett befintligt jobb utan mitt ja.
 
-## Steg 6: Reverse proxy i webbcontainern
+## Steg 6: Bygg hemsidan (B)
 
-1. Gör en snapshot av webbcontainern: `pct snapshot <id> fore-pocketbase`.
-2. Kopiera den nuvarande konfigurationsfilen till `<fil>.bak` inne i containern.
-3. Lägg till, på **samma domän** som hemsidan så att inga CORS-inställningar behövs:
-   - `/api/` → `http://<PocketBase-containerns IP>:8090/api/`
-   - `/_/` → `http://<PocketBase-containerns IP>:8090/_/` (admin-gränssnittet)
-4. Ta med:
-   - nginx: `client_max_body_size 20M`; Caddy: motsvarande gräns för request body,
-   - headers för WebSocket/SSE (`Upgrade`, `Connection`) och `X-Forwarded-For`/`X-Forwarded-Proto`,
-   - för nginx: `proxy_buffering off` på `/api/realtime`.
-5. Kontrollera att hemsidans egen `location /` har `try_files $uri /index.html;`
-   eftersom React-appen använder klientrouting. Saknas den, föreslå att lägga till den.
-6. Visa ändringen som en diff och vänta på mitt ja.
-7. Testa konfigurationen (`nginx -t` eller `caddy validate`) **innan** omladdning.
-   Ladda sedan om, starta inte om (`systemctl reload ...`).
-8. Om något går fel: återställ `.bak`-filen och ladda om.
+1. Installera **Node.js 22 LTS** från NodeSource. Debians egen Node är för gammal för Vite.
+   Kontrollera med `node -v` och jämför med `engines` i `package.json` om det finns.
+2. Installera `nginx` och `rsync`.
+3. Skapa en användare `deploy` utan sudo.
+4. Klona repot som `deploy` till `/opt/sebekiles/repo`. Om det är privat: skapa en
+   ed25519-nyckel för `deploy`, visa den publika delen, och vänta medan jag lägger in den
+   som read-only deploy key på GitHub.
+5. Kör `npm ci` och `npm run build` och visa att `dist/` skapades utan fel.
 
-## Steg 7: Kontroll
+## Steg 7: Servera hemsidan med nginx (B)
+
+Skapa `/etc/nginx/sites-available/sebekiles`, länka till `sites-enabled` och ta bort
+standardsidan. B behöver bara HTTP på port 80, eftersom C sköter HTTPS.
+
+- `root /var/www/sebekiles;`
+- `location / { try_files $uri /index.html; }`: React-appen använder klientrouting, så alla
+  okända adresser ska ge `index.html`.
+- `location /assets/`: `Cache-Control: public, max-age=31536000, immutable`
+  (filnamnen innehåller en hash).
+- `index.html`: `Cache-Control: no-cache`, så att nya versioner syns direkt.
+- `location /api/` → `http://<A:s IP>:8090/api/`
+  - `client_max_body_size 20M` för bilduppladdningar,
+  - headers `Host`, `X-Forwarded-For`, `X-Forwarded-Proto` (använd värdet som kommer från C),
+  - `proxy_buffering off` och HTTP/1.1 med `Upgrade`/`Connection` för `/api/realtime`.
+- `location /_/` → `http://<A:s IP>:8090/_/` (PocketBase admin-gränssnitt), samma headers.
+- Slå på gzip för text, css, js, json och svg.
+
+Testa med `nginx -t` och ladda om.
+
+## Steg 8: Deploy-skript (B)
+
+Skapa `/opt/sebekiles/deploy.sh`, ägd av `deploy`, som:
+1. kör `git pull --ff-only` i repot,
+2. kör `npm ci` och `npm run build` och **avbryter** om något steg misslyckas,
+3. kopierar `dist/` till `/var/www/sebekiles/` med `rsync -a --delete`,
+4. skriver ut vilken commit som nu ligger ute.
+
+`deploy` ska kunna skriva i `/var/www/sebekiles/` utan sudo.
+Kör skriptet en gång och visa resultatet.
+
+Visa hur jag kör det från värden: `pct exec <B:s id> -- su - deploy -c /opt/sebekiles/deploy.sh`.
+
+## Steg 9: Site-block i reverse proxyn (C)
+
+1. Snapshot: `pct snapshot <C:s id> fore-sebekiles`.
+2. Skapa ett **nytt** site-block för mammas domän i en egen fil. Ändra inte befintliga
+   site-block för andra domäner.
+3. Allt för domänen → `http://<B:s IP>:80`, med headers `Host`, `X-Forwarded-For`,
+   `X-Forwarded-Proto`, `Upgrade`/`Connection`, och en gräns för request body på 20 MB.
+4. HTTPS för domänen på samma sätt som C redan gör för andra domäner (certbot eller Caddy),
+   och omdirigering från HTTP till HTTPS.
+5. Visa den nya filen och vänta på mitt ja.
+6. Testa (`nginx -t` eller `caddy validate`) **innan** omladdning. Ladda om, starta inte om.
+7. Om något går fel: ta bort den nya filen och ladda om. Hjälper inte det: `pct rollback`.
+
+## Steg 10: Kontroll
 
 När allt är klart, visa:
-1. `systemctl status pocketbase` i PocketBase-containern, och att tjänsten överlever en
-   omstart av containern (`pct reboot <id>`).
-2. `curl https://<domänen>/api/health` utifrån, via proxyn.
-3. `curl https://<domänen>/api/collections/cats/records`: ska ge tom lista, inte fel.
-4. Att ett POST mot `cats` **utan** inloggning nekas.
-5. Att `https://<domänen>/_/` visar PocketBase inloggningssida.
-6. Att hemsidan fortfarande fungerar: `https://<domänen>/` och `https://<domänen>/katter`.
-7. En lista över allt du har skapat och ändrat, med container-id, IP, filer och snapshot-namn.
+1. `systemctl status pocketbase` i A och `systemctl status nginx` i B, och att båda
+   överlever en omstart av sina containrar.
+2. `curl -I https://<domänen>/`: ska ge 200 över HTTPS.
+3. `curl -I https://<domänen>/katter`: ska ge 200 (klientroutingen fungerar).
+4. `curl https://<domänen>/api/health` och `.../api/collections/cats/records`: ska ge tom
+   lista, inte fel.
+5. Att ett POST mot `cats` **utan** inloggning nekas.
+6. Att `https://<domänen>/_/` visar PocketBase inloggningssida.
+7. Att min portfolio fortfarande fungerar.
+8. En lista över allt du har skapat och ändrat: container-id, IP-adresser, filer,
+   snapshot-namn och hur jag kör `deploy.sh`.
 
 Importen av befintlig data (katter, bilder och resultat) görs i ett senare steg med ett
 skript från repot, så den behöver du inte göra nu.

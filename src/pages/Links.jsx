@@ -16,8 +16,12 @@ export default function Links() {
           <h2 id={`${group.id}-heading`} className={styles.sectionTitle}>{group.title}</h2>
           <ul className={styles.list}>
             {group.links.map((link) => (
-              <li key={link.url} className={styles.item}>
-                <ExternalLink href={link.url} className={styles.name}>{link.name}</ExternalLink>
+              <li key={link.name} className={styles.item}>
+                {link.url ? (
+                  <ExternalLink href={link.url} className={styles.name}>{link.name}</ExternalLink>
+                ) : (
+                  <span className={styles.name}>{link.name}</span>
+                )}
                 <p className={styles.description}>{link.description}</p>
               </li>
             ))}

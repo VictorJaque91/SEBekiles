@@ -10,6 +10,7 @@ export const mainLinks = [
 
 export const footerLinks = [
   { to: '/kontakt', label: 'Kontakta oss' },
+  { to: '/nyheter', label: 'Nyheter' },
   { to: '/lankar', label: 'Länkar & vänner' },
   { to: '/om-rasen', label: 'Om rasen' },
 ]

@@ -8,8 +8,16 @@ export default function Header() {
 
     return (
         <header className={styles.header}>
-            <Link to="/" className={styles.logo}>SE*Bekiles</Link>
-            <p className={styles.tagline}>en liten uppfödning av Sibirisk katt</p>
+            <Link to="/" className={styles.logo}>
+                <picture>
+                    <source media="(max-width: 920px)" srcSet="/images/logo-compact.webp" />
+                    <img
+                        src="/images/logo.webp"
+                        alt="SE*Bekiles – en liten uppfödning av Sibirisk katt"
+                        className={styles.logoImage}
+                    />
+                </picture>
+            </Link>
 
             <button
                 type="button"

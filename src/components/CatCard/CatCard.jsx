@@ -2,6 +2,7 @@ import { breedNames, sexLabel, formatDate, getAge } from '../../utils/catHelpers
 import styles from './CatCard.module.css'
 import { useState } from 'react'
 import ImageModal from '../ImageModal/ImageModal.jsx'
+import ExternalLink from '../ExternalLink/ExternalLink.jsx'
 
 export default function CatCard({ cat, headingLevel = 2 }) {
   const [imageOpen, setImageOpen] = useState(false)
@@ -56,18 +57,19 @@ export default function CatCard({ cat, headingLevel = 2 }) {
           <dt>Färg</dt>
           <dd>{cat.color.name} ({cat.color.ems})</dd>
         </dl>
-        {cat.story && <p className={styles.story}>{cat.story}</p>}
-
-        {cat.pedigreeUrl && (
-          <a
-            href={cat.pedigreeUrl}
-            className={styles.link}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Stamtavla
-            <span className="visually-hidden"> för {cat.callName} (öppnas i ny flik)</span>
-          </a>
+        {(cat.pedigreeUrl || cat.sverakUrl) && (
+          <ul className={styles.links} aria-label={`Länkar om ${cat.callName}`}>
+            {cat.pedigreeUrl && (
+              <li>
+                <ExternalLink href={cat.pedigreeUrl} className={styles.link}>Stamtavla</ExternalLink>
+              </li>
+            )}
+            {cat.sverakUrl && (
+              <li>
+                <ExternalLink href={cat.sverakUrl} className={styles.link}>SVERAK</ExternalLink>
+              </li>
+            )}
+          </ul>
         )}
       </div>
     </article>

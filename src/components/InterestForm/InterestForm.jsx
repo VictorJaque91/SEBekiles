@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import FormField from '../FormField/FormField.jsx'
 import { validateInterest } from '../../utils/validation.js'
+import { sendForm } from '../../utils/sendForm.js'
+import { formIds, fallbackEmail } from '../../data/forms.js'
 import styles from './InterestForm.module.css'
 
 const initialValues = {
@@ -16,6 +18,7 @@ export default function InterestForm() {
   const [values, setValues] = useState(initialValues)
   const [attempted, setAttempted] = useState(false)
   const [sent, setSent] = useState(false)
+  const [status, setStatus] = useState('idle') // 'idle' | 'sending' | 'error'
   const formRef = useRef(null)
   const successRef = useRef(null)
 
@@ -33,7 +36,7 @@ export default function InterestForm() {
     }))
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
     setAttempted(true)
 
@@ -45,8 +48,20 @@ export default function InterestForm() {
       return
     }
 
-    // TODO: skicka till Formspree eller liknande tjänst
-    setSent(true)
+    setStatus('sending')
+    try {
+      await sendForm(formIds.interest, {
+        _subject: `Ny intresseanmälan från ${values.name}`,
+        Namn: values.name,
+        email: values.email, // Formspree använder fältet "email" som svarsadress
+        Telefon: values.phone,
+        Önskemål: values.wish,
+        'Om mig och mitt hem': values.about,
+      })
+      setSent(true)
+    } catch {
+      setStatus('error')
+    }
   }
 
   if (sent) {
@@ -140,7 +155,20 @@ export default function InterestForm() {
         )}
       </div>
 
-      <button type="submit" className={styles.submit}>Skicka anmälan</button>
+      {status === 'error' && (
+        <p role="alert" className={styles.error}>
+          Något gick fel och meddelandet skickades inte. Försök igen, eller mejla oss
+          direkt på <a href={`mailto:${fallbackEmail}`}>{fallbackEmail}</a>.
+        </p>
+      )}
+
+      <button
+        type="submit"
+        className={styles.submit}
+        disabled={status === 'sending'}
+      >
+        {status === 'sending' ? 'Skickar…' : 'Skicka anmälan'}
+      </button>
     </form>
   )
 }

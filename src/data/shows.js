@@ -14,6 +14,17 @@
  * @property {ShowResult[]} results
  */
 
+// Namn på katter som inte längre finns i cats.js men har utställningsresultat.
+export const formerCatNames = {
+  colorado: 'Colorado',
+  teeter: 'Teeter',
+  vanessa: 'Vanessa',
+  xabina: 'Xabina',
+  zara: 'Zara',
+  svea: 'Svea',
+  trym: 'Trym',
+}
+
 /** @type {Show[]} */
 export const shows = [
   {
@@ -160,11 +171,10 @@ export const shows = [
     ],
   },
   {
-    // TODO: kontrollera datumet. Kommer efter maj 2023 i listan – kanske 2023-05-14?
-    id: '2023-03-14-bjorkstakatten-umea',
+    id: '2023-05-14-bjorkstakatten-umea',
     name: 'Björkstakatten Umeå',
     ring: null,
-    date: '2023-03-14',
+    date: '2023-05-14',
     results: [
       { cat: 'vanessa', result: 'CAGPIB', judge: 'Zvezdan Mededov' },
       { cat: 'svea', result: 'CACIB', judge: 'Karl Preiss' },
@@ -339,11 +349,10 @@ export const shows = [
     ],
   },
   {
-    // TODO: kontrollera datumet. Samma namn och datum som utställningen före – kanske dag två?
-    id: '2024-06-08-solkatten-2',
+    id: '2024-06-09-solkatten',
     name: 'Solkatten',
     ring: null,
-    date: '2024-06-08',
+    date: '2024-06-09',
     results: [
       { cat: 'bjarven', result: 'CACIB, NOM', judge: 'Ksenia Karpinska' },
     ],
@@ -678,11 +687,10 @@ export const shows = [
     ],
   },
   {
-    // TODO: kontrollera datumet. Står före 2026-08-30 i listan – kanske 2026-08-29?
-    id: '2026-09-29-sundsvalls-kattklubb',
+    id: '2026-08-29-sundsvalls-kattklubb',
     name: 'Sundsvalls kattklubb',
     ring: null,
-    date: '2026-09-29',
+    date: '2026-08-29',
     results: [
       { cat: 'bjarven', result: 'CAPIB', judge: 'Malin Sundqvist' },
       { cat: 'vega', result: 'CACC', judge: 'Lene Hodal Glem Fjeldsted' },

@@ -1,9 +1,10 @@
 import { cats } from '../data/cats.js'
 import PageHeader from '../components/PageHeader/PageHeader.jsx'
 import ButtonLink from '../components/ButtonLink/ButtonLink.jsx'
+import { county, currentClub } from '../data/breeder.js'
 import styles from './About.module.css'
 
-const credentials = [
+const credentialsBase = [
   {
     title: 'Certifierad uppfödare',
     text: 'Annika har gått diplomeringsutbildningen, Uppfödarettan och certifiering.',
@@ -14,17 +15,18 @@ const credentials = [
   },
   {
     title: 'Länsstyrelsens tillstånd',
-    text: 'Tillstånd från Länsstyrelsen [LÄN] att föda upp och sälja katter från egen uppfödning.',
-  },
-  {
-    title: '[KATTKLUBB]',
-    text: 'Medlemmar i kattklubben och aktiva på utställningar.',
+    text: `Tillstånd från Länsstyrelsen ${county} att föda upp och sälja katter från egen uppfödning.`,
   },
 ]
 
 const listFormat = new Intl.ListFormat('sv', { style: 'long', type: 'conjunction' })
 
 export default function About() {
+  const credentials = [
+    ...credentialsBase,
+    { title: currentClub(), text: 'Medlemmar i kattklubben och aktiva på utställningar.' },
+  ]
+
   const homeCatNames = cats
     .filter((cat) => cat.status === 'home')
     .map((cat) => cat.callName)

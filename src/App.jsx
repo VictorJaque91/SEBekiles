@@ -11,6 +11,7 @@ import About from './pages/About.jsx'
 import Contact from './pages/Contact.jsx'
 import Links from './pages/Links.jsx'
 import Breed from './pages/Breed.jsx'
+import News from './pages/News.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="/kontakt" element={<Contact />} />
           <Route path="/lankar" element={<Links />} />
           <Route path="/om-rasen" element={<Breed />} />
+          <Route path="/nyheter" element={<News />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

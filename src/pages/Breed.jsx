@@ -7,11 +7,11 @@ import styles from './Breed.module.css'
 const facts = [
   {
     title: 'Ursprung',
-    text: 'Sibirisk katt är en naturlig ras från de skogsklädda delarna av Ryssland. De första tio sibiriska katterna för avel registrerades i Sverige år 2000, och i dag är rasen en av de vanligaste i landet.',
+    text: 'Sibirisk katt är en naturras från Ryssland. De första tio sibiriska katterna för avel registrerades i Sverige år 2000, och i dag är rasen en av de vanligaste i landet.',
   },
   {
     title: 'Utseende',
-    text: 'En kraftig, medelstor till stor katt med halvlång päls. Pälsen har tät underull som skyddar mot kyla och väta, och den fäller mer vid årstidsskiften.',
+    text: 'En medelstor katt med halvlång, vattenavstötande päls. Pälsen har tät underull som skyddar mot kyla och väta, och den fäller mer vid årstidsskiften.',
   },
   {
     title: 'Temperament',
@@ -19,7 +19,7 @@ const facts = [
   },
   {
     title: 'Skötsel',
-    text: 'Pälsen behöver borstas regelbundet, särskilt under fällningen. Precis som alla katter behöver de sällskap, aktivering och regelbunden kontroll hos veterinär.',
+    text: 'Pälsen behöver kammas regelbundet, särskilt under fällningen. Precis som alla katter behöver de sällskap, aktivering och regelbunden kontroll hos veterinär.',
   },
 ]
 
@@ -28,7 +28,7 @@ export default function Breed() {
     <>
       <title>Om rasen – SE*Bekiles</title>
       <PageHeader title="Sibirisk katt">
-        En kraftig skogskatt med mjuk päls och ett socialt sinne.
+        En medelstor naturras med vattenavstötande päls och ett socialt sinne.
       </PageHeader>
 
       <section className={styles.section} aria-label="Om Sibirisk katt">
