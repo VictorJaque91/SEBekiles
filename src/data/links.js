@@ -10,7 +10,7 @@ export const linkGroups = [
         url: null,
       },
       {
-        name: 'S*Lurvtassens Sibiriska katter',
+        name: 'SE*Lurvtrollets Sibiriska katter',
         description: 'Katarina Eklöf, Ljusne',
         url: null,
       },
