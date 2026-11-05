@@ -59,7 +59,7 @@ export const cats = [
     sex: 'female',
     neutered: true,
     status: 'home',
-    featured: false,
+    featured: true,
     born: '2024-03-10',
     color: { name: 'Svart-vit', ems: 'n 09' },
     image: { src: '/images/cats/stella.webp', alt: 'Stella, en svart-vit sibirisk katt' },

@@ -43,7 +43,7 @@ export const litters = [
     father: null,
     status: 'planned',
     dates: {},
-    note: 'Planen är att Vega paras i juni 2027. Vi har två hanar att välja mellan och bestämmer oss närmare parningen.',
+    note: 'Planen är att Vega paras i juni 2027. Hane presenteras senare när det närmar sig.',
     kittens: [],
     images: [],
   },

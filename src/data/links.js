@@ -7,17 +7,17 @@ export const linkGroups = [
       {
         name: 'SE*Iskär’s Sibirisk katt',
         description: 'Jennie Kjellson Åberg, Alnö',
-        url: null,
+        url: 'https://www.facebook.com/groups/132958000589764/',
       },
       {
         name: 'SE*Lurvtrollets Sibiriska katter',
         description: 'Katarina Eklöf, Ljusne',
-        url: null,
+        url: 'https://lurvtrollets.se/',
       },
       {
         name: 'SE*RareWind’s Katter',
         description: 'Ylwa Rådlund, Bergvik',
-        url: null,
+        url: 'https://www.facebook.com/groups/353266208534134/'
       },
     ],
   },
