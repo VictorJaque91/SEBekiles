@@ -38,8 +38,13 @@ export default function About() {
       <PageHeader title="Om oss" />
 
       <section className={styles.intro} aria-labelledby="intro-heading">
-        {/* TODO: byt mot ett foto på Annika och Bernt med katterna */}
-        <div className={styles.photo} aria-hidden="true" />
+        <img
+          src="/images/annika-bernt.webp"
+          alt="Annika och Bernt står hemma i vardagsrummet och håller var sin långhårig sibirisk katt"
+          width="900"
+          height="1200"
+          className={styles.photo}
+        />
         <div className={styles.introText}>
           <p className={styles.eyebrow}>Sedan 2013</p>
           <h2 id="intro-heading" className={styles.introTitle}>Ett kattokigt par i Linköping</h2>

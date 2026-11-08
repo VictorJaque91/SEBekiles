@@ -237,8 +237,8 @@ export default function Kittens() {
       ))}
     </ul>
     <p className={styles.price}>
-      Pris: 15 000 kr. Samma pris för sällskap och avel. Kattungar tingas efter besök med
-      SVERAKs tingningsavtal.
+      Priset diskuteras vid affär. Kattungar tingas efter besök med SVERAKs
+      tingningsavtal.
     </p>
   </section>
 
