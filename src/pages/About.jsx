@@ -40,7 +40,7 @@ export default function About() {
       <section className={styles.intro} aria-labelledby="intro-heading">
         <img
           src="/images/annika-bernt.webp"
-          alt="Annika och Bernt står hemma i vardagsrummet och håller var sin långhårig sibirisk katt"
+          alt="Annika håller Vega och Bernt håller Bjärven, hemma i vardagsrummet"
           width="900"
           height="1200"
           className={styles.photo}
